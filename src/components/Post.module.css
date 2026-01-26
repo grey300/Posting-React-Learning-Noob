@@ -1,0 +1,57 @@
+.post{
+    text-align: left;
+    color: #d9d9d9;
+    font-size: 20px;
+    border-radius: 25px;
+    border: 1px solid #242628;
+    background: #17181C;
+    padding: 2rem;
+    width: calc(33.333% - 10px)
+}
+
+.postlist{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 1%;
+    border: #242628 1px solid;
+    padding: 1%;
+}
+
+.newpost{
+        color: #d9d9d9;
+        font-size: 16px;
+        background: #17181C;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #242628;
+        gap: 10px;
+        padding: 10px;
+
+}
+
+.newpost input, .newpost textarea{
+    border: 1px solid #242628;
+    border-radius: 5px;
+    padding: 5px;
+    color: #d9d9d9;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.modal {
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  overflow: hidden;
+  z-index: 1;
+}
