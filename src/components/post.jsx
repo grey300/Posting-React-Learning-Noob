@@ -1,18 +1,9 @@
 import classes from "./post.module.css";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 
-function Post(Props){
+function Post({ Author, m }){
     return <li className={classes.post}>
-        <p>{Props.Author}</p>
-        <p className="text-sm text-cyan-500">{Props.m}</p>
+        <p>{Author}</p>
+        <p className="text-sm text-cyan-500">{m}</p>
     </li>
 }
 

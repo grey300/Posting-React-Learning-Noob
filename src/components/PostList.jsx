@@ -1,33 +1,56 @@
 import Post from "./post";
 import classes from "./post.module.css";
-import { useState } from "react";
 import Modal from "./Modal";
+import NewPost from "./NewPost";
+import { useState, useEffect } from "react";
 
-function PostList(isPosting, onStopPosting){
+function PostList({ isPosting, onStopPosting }){
 
-    const [author, setAuthor] = useState("");
-    const [message, setMessage] = useState("");
+    useEffect(()=> {
+        async function fetchPosts(){
+            const response = await fetch('http://localhost:8080/posts')
+            const resData = await response.json();
+            setPosts(resData.posts);
+        }
 
-    function handleAuthorChange(event){
-        setAuthor(event.target.value);
-    }
-    function handleMessageChange(event){
-        setMessage(event.target.value);
+        fetchPosts();
+    }, []);
+
+    const [posts, setPosts] = useState([]);
+
+    function addPostHandler(postData){
+        fetch('http://localhost:8080/posts', {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        setPosts((existingPosts) => [postData, ...existingPosts]);
     }
 
     return <>
     
-    {isPosting&& <Modal onClose={onStopPosting}> <NewPost onMessageChange={handleMessageChange} onAuthorChange={handleAuthorChange}/></Modal>}
+    {isPosting && (
+        <Modal onClose={onStopPosting}> 
+            <NewPost onCancel={onStopPosting} onAddPost={addPostHandler}/>
+        </Modal>)}
 
-    <ul className={classes.postlist}>
-        <Post Author={author} m={message}/>
-        <Post Author="Pema" m="Hey this is pema's mall"/>
-        <Post Author="Pema" m="Hey this is pema's mall"/>
-        <Post Author="Pema" m="Hey this is pema's mall"/>
-    </ul>
+    {posts.length>0 && (
+        <ul className={classes.postlist}>
+            {posts.map((posts) => <Post key={posts.body} Author={posts.author} m={posts.body}/>)}
+        </ul>
+    )}
+
+    {posts.length===0 && (
+        <div className="text-center text-amber-50">
+            <h2>There are no post yet</h2>
+            <p>Start addming some!</p>
+        </div>
+    )}
+
+
     </>
-    
-    
 }
 
 export default PostList;
